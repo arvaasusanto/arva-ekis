@@ -31,11 +31,12 @@ export default function AboutPage() {
                     <p>
                         For inquiries, updated analysis, or to contribute, please contact us at:
                         <br />
-                        <strong>Email:</strong> editor@arvaasjournal.com
+                        <strong>Email:</strong> arvaathallah@gmail.com
                     </p>
                 </div>
             </section>
             <Footer />
         </main>
     );
+
 }
