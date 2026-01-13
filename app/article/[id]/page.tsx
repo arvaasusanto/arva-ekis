@@ -29,6 +29,16 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                         </div>
                     </div>
                 </header>
+                {/* Hero Image */}
+                {article.image && (
+                    <div className="w-full max-w-4xl mx-auto px-4 -mt-8 mb-8 relative z-10">
+                        <img
+                            src={article.image}
+                            alt={article.title}
+                            className="w-full h-[400px] object-cover shadow-xl rounded-lg"
+                        />
+                    </div>
+                )}
                 {/* Content */}
                 <div className="max-w-3xl mx-auto px-4 py-12">
                     <div className="prose prose-lg prose-red max-w-none font-serif text-gray-800">
