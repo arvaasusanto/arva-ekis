@@ -32,16 +32,7 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                         </div>
                     </div>
                 </header>
-                {/* Hero Image - Verified Logic */}
-                {article.image ? (
-                    <div className="w-full max-w-4xl mx-auto px-4 -mt-8 mb-8 relative z-10">
-                        <img
-                            src={article.image}
-                            alt={article.title}
-                            className="w-full h-[400px] object-cover shadow-xl rounded-lg"
-                        />
-                    </div>
-                ) : null}
+                {/* NOTE: Image section removed as per user request for simplicity */}
                 {/* Content */}
                 <div className="max-w-3xl mx-auto px-4 py-12">
                     <div className="prose prose-lg prose-red max-w-none font-serif text-gray-800">
@@ -51,11 +42,13 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                                 {article.excerpt}
                             </p>
                         )}
-                        {/* Main Content - HTML Rendering */}
-                        <div
-                            className="article-content"
-                            dangerouslySetInnerHTML={{ __html: article.content }}
-                        />
+                        {/* Main Content - Simple Text Rendering */}
+                        {/* Splits text by double newlines and renders as simple paragraphs */}
+                        {article.content.split(/\n\s*\n/).map((paragraph, index) => (
+                            <p key={index} className="mb-6 leading-relaxed text-gray-800">
+                                {paragraph}
+                            </p>
+                        ))}
                     </div>
                 </div>
             </article>
