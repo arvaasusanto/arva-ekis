@@ -1,4 +1,3 @@
-
 export interface Article {
     id: string;
     title: string;
@@ -34,6 +33,25 @@ export const recentArticles: Article[] = [
         author: "Arva Athallah Susanto",
         category: "Moneter & Kekuasaan",
         content: "The modern fiat monetary system is built on debt and infinite expansion, leading to inevitable cycles of inflation and crash. The Gold Dinar represents a return to intrinsic value—money that cannot be printed at will by central banks. This analysis explores the geopolitical implications of a shift away from the petrodollar towards asset-backed currencies.",
+    },
+    {
+        id: "5",
+        title: "Central Bank Digital Currencies (CBDC): An Islamic Economic Perspective",
+        author: "Arva Athallah Susanto",
+        category: "Moneter & Kekuasaan",
+        image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=2555&auto=format&fit=crop",
+        excerpt: "As central banks race to issue digital currencies, what are the implications for privacy, monetary sovereignty, and Islamic finance?",
+        content: `
+        <p class="mb-6 leading-relaxed">The race for Central Bank Digital Currencies (CBDCs) marks the most significant shift in the monetary landscape since the abandonment of the gold standard. While proponents argue that CBDCs offer efficiency, financial inclusion, and better monetary transmission, a critical Islamic Economic perspective reveals deep concerns regarding state surveillance, centralization of power, and the nature of money itself.</p>
+        <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-900">The Nature of Digital Fiat</h3>
+        <p class="mb-6 leading-relaxed">From an Islamic standpoint, money must possess intrinsic value (Mal mutaqawwam) or be a reliable store of value that guarantees justice in exchange. Fiat currency has long been criticized by Islamic scholars for its detached nature from real assets. CBDCs do not solve this fundamental flaw; they merely digitize it. A digital Rupiah or Dollar is still a liability of the central bank, backed by nothing but state decree.</p>
+        <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-900">Surveillance and Privacy (Hifz al-Mal)</h3>
+        <p class="mb-6 leading-relaxed">One of the Maqasid al-Sharia is the preservation of wealth (Hifz al-Mal). CBDCs act as programmable money, allowing the issuer to track every transaction. This raises the specter of total state surveillance, where financial privacy—a key component of economic freedom—is obliterated. In extreme cases, programmable money could be set to 'expire' or be restricted for certain purchases, effectively removing the owner's full possession (Milkiyah Tammah) over their wealth.</p>
+        <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-900">Centralization vs. Decentralization</h3>
+        <p class="mb-6 leading-relaxed">Islamic economic history favors decentralized market mechanisms (the Souq) over centralized state control. The intense centralization inherent in CBDCs opposes the distributed nature of the Gold Dinar or Silver Dirham economies of the past. It places the central bank as the ultimate arbiter of who can transact, potentially marginalizing those who dissent from state policies.</p>
+        <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-900">The Way Forward</h3>
+        <p class="mb-6 leading-relaxed">Muslim nations must be cautious. Instead of blindly adopting CBDC architectures designed by the West or China, we should explore hybrid models or truly asset-backed digital currencies (Gold-backed tokens) that align with Sharia principles of fairness and intrinsic value. The future of money is digital, but it must not come at the cost of liberty and justice.</p>
+        `
     },
     {
         id: "2",
