@@ -51,28 +51,11 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                                 {article.excerpt}
                             </p>
                         )}
-                        {/* Main Content - Custom Markdown Parser */}
-                        {/* Uses regex to split paragraphs safely */}
-                        {article.content.split(/\n\s*\n/).map((paragraph, pIndex) => {
-                            // Split by **text** to find bold sections
-                            const parts = paragraph.split(/(\*\*.*?\*\*)/g);
-                            return (
-                                <p key={pIndex} className="mb-4 text-gray-800 leading-relaxed">
-                                    {parts.map((part, i) => {
-                                        if (part.startsWith('**') && part.endsWith('**')) {
-                                            // Render as a "Header" styled bold block
-                                            return (
-                                                <span key={i} className="block font-bold text-xl md:text-2xl mt-8 mb-4 text-gray-900 border-b border-gray-200 pb-2">
-                                                    {part.slice(2, -2)}
-                                                </span>
-                                            );
-                                        }
-                                        // Regular text
-                                        return <span key={i}>{part}</span>;
-                                    })}
-                                </p>
-                            );
-                        })}
+                        {/* Main Content - HTML Rendering */}
+                        <div
+                            className="article-content"
+                            dangerouslySetInnerHTML={{ __html: article.content }}
+                        />
                     </div>
                 </div>
             </article>
