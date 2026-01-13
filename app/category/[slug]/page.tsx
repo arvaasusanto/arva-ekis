@@ -12,22 +12,21 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     const categoryArticles = [featuredArticle, ...recentArticles].filter((article) => {
         return article.category === categoryName;
     });
-});
-return (
-    <main className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="bg-secondary text-white py-16 px-4 text-center">
-            <h1 className="text-4xl font-serif font-bold mb-4">{categoryName}</h1>
-            <p className="text-gray-400 max-w-xl mx-auto">
-                Archives and analysis regarding {categoryName.toLowerCase()}.
-            </p>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
-            <ArticleGrid articles={categoryArticles} />
-        </div>
-        <Footer />
-    </main>
-);
+    return (
+        <main className="min-h-screen flex flex-col">
+            <Navbar />
+            <div className="bg-secondary text-white py-16 px-4 text-center">
+                <h1 className="text-4xl font-serif font-bold mb-4">{categoryName}</h1>
+                <p className="text-gray-400 max-w-xl mx-auto">
+                    Archives and analysis regarding {categoryName.toLowerCase()}.
+                </p>
+            </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+                <ArticleGrid articles={categoryArticles} />
+            </div>
+            <Footer />
+        </main>
+    );
 }
 export async function generateStaticParams() {
     return navLinks
