@@ -39,11 +39,27 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                             </p>
                         )}
                         {/* Main Content - split by double newline to create paragraphs */}
-                        {article.content.split('\n\n').map((paragraph, index) => (
-                            <p key={index} className="mb-4">
-                                {paragraph}
-                            </p>
-                        ))}
+                        {/* Main Content - Custom Markdown Parser */}
+                        {article.content.split('\n\n').map((paragraph, pIndex) => {
+                            // Split by **text** to find bold sections
+                            const parts = paragraph.split(/(\*\*.*?\*\*)/g);
+                            return (
+                                <p key={pIndex} className="mb-4 text-gray-800 leading-relaxed">
+                                    {parts.map((part, i) => {
+                                        if (part.startsWith('**') && part.endsWith('**')) {
+                                            // Render as a "Header" styled bold block
+                                            return (
+                                                <span key={i} className="block font-bold text-xl md:text-2xl mt-8 mb-4 text-gray-900">
+                                                    {part.slice(2, -2)}
+                                                </span>
+                                            );
+                                        }
+                                        // Regular text
+                                        return <span key={i}>{part}</span>;
+                                    })}
+                                </p>
+                            );
+                        })}
                     </div>
                 </div>
             </article>
