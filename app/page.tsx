@@ -1,63 +1,44 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import ArticleGrid from "@/components/ArticleGrid";
 import Footer from "@/components/Footer";
-import { featuredArticle, recentArticles } from "@/lib/data";
-
-export default function Home() {
+import ArticleGrid from "@/components/ArticleGrid";
+import { recentArticles, navLinks } from "@/lib/data";
+import { notFound } from "next/navigation";
+export default function CategoryPage({ params }: { params: { slug: string } }) {
+    // Find category name from slug
+    const categoryLink = navLinks.find((link) => link.href.includes(params.slug));
+    const categoryName = categoryLink ? categoryLink.name : params.slug.replace(/-/g, " ");
+    // Filter articles
+    const normalizedCategoryName = categoryName.toLowerCase();
+    // Check both recent and featured to populate the category
+    const categoryArticles = [featuredArticle, ...recentArticles].filter((article) => {
+        // Simple string matching, robust enough for this scale
+        // "Moneter & Kekuasaan" -> check if includes "Moneter" or exact match
+        if (!article.category) return false;
+        return article.category.toLowerCase().includes(normalizedCategoryName) ||
+            normalizedCategoryName.includes(article.category.toLowerCase()) ||
+            // Handle specific slug mapping if needed, but direct match is safest for now
+            article.category === categoryName;
+    });
     return (
         <main className="min-h-screen flex flex-col">
             <Navbar />
-
-            <Hero article={featuredArticle} />
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
-                <div className="flex flex-col md:flex-row gap-12">
-                    {/* Main Content */}
-                    <div className="flex-1">
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
-                            <h2 className="text-2xl font-serif font-bold text-gray-900">
-                                Latest Analysis
-                            </h2>
-                            <span className="text-sm font-medium text-primary cursor-pointer hover:underline">
-                                View All
-                            </span>
-                        </div>
-
-                        <ArticleGrid articles={recentArticles} />
-                    </div>
-
-                    {/* Sidebar */}
-                    <aside className="w-full md:w-80 flex-shrink-0 space-y-8">
-                        <div className="bg-paper p-6 border border-gray-100 rounded-sm">
-                            <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm mb-4">
-                                Weekly Brief
-                            </h3>
-                            <p className="text-sm text-gray-600 mb-4">
-                                Get our editor's digest of the most critical economic shifts in the Islamic world.
-                            </p>
-                            <button className="w-full bg-secondary text-white py-2 font-medium text-sm hover:bg-gray-800 transition-colors">
-                                Subscribe Free
-                            </button>
-                        </div>
-
-                        <div>
-                            <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm mb-4 pb-2 border-b border-gray-200">
-                                Trending Topics
-                            </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {["De-dollarization", "Waqf", "Gold Dinar", "Digital Assets", "Fiscal Policy"].map((tag) => (
-                                    <span key={tag} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 hover:bg-gray-200 cursor-pointer">
-                                        #{tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </aside>
-                </div>
+            <div className="bg-secondary text-white py-16 px-4 text-center">
+                <h1 className="text-4xl font-serif font-bold mb-4">{categoryName}</h1>
+                <p className="text-gray-400 max-w-xl mx-auto">
+                    Archives and analysis regarding {categoryName.toLowerCase()}.
+                </p>
             </div>
-
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+                <ArticleGrid articles={categoryArticles} />
+            </div>
             <Footer />
         </main>
     );
+}
+export async function generateStaticParams() {
+    return navLinks
+        .filter(link => link.href.startsWith("/category/"))
+        .map((link) => ({
+            slug: link.href.replace("/category/", ""),
+        }));
 }
