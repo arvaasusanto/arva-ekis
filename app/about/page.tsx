@@ -33,10 +33,30 @@ export default function AboutPage() {
                         <br />
                         <strong>Email:</strong> arvaathallah@gmail.com
                     </p>
+                    <h3>Connect with the Editor</h3>
+                    <p>
+                        Follow Arva Athallah Susanto for more regular updates and discussions:
+                    </p>
+                    <ul className="not-prose list-none p-0 space-y-2">
+                        <li>
+                            <a href="https://www.linkedin.com/in/arva-athallah-s/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-primary hover:underline font-medium">
+                                <span>LinkedIn: Arva Athallah S</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/@arva_as" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-primary hover:underline font-medium">
+                                <span>YouTube: @arva_as</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/arva_as" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-primary hover:underline font-medium">
+                                <span>Instagram: @arva_as</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </section>
             <Footer />
         </main>
     );
-
 }
