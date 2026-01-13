@@ -3,11 +3,15 @@ import Footer from "@/components/Footer";
 import { recentArticles, featuredArticle } from "@/lib/data";
 import { notFound } from "next/navigation";
 export default function ArticlePage({ params }: { params: { id: string } }) {
+    // Combine all articles to find the one matching the ID
     const allArticles = [featuredArticle, ...recentArticles];
     const article = allArticles.find((a) => a.id === params.id);
+    // Explicitly handle "undefined" to satisfy TypeScript build
     if (!article) {
-        notFound();
+        return notFound();
     }
+    // Safety: at this point, 'article' is guaranteed to be defined.
+    // However, to be extra safe for the compiler, we access properties from 'article'.
     return (
         <main className="min-h-screen flex flex-col">
             <Navbar />
@@ -28,8 +32,8 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                         </div>
                     </div>
                 </header>
-                {/* Hero Image */}
-                {article.image && (
+                {/* Hero Image - Verified Logic */}
+                {article.image ? (
                     <div className="w-full max-w-4xl mx-auto px-4 -mt-8 mb-8 relative z-10">
                         <img
                             src={article.image}
@@ -37,29 +41,33 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                             className="w-full h-[400px] object-cover shadow-xl rounded-lg"
                         />
                     </div>
-                )}
+                ) : null}
                 {/* Content */}
                 <div className="max-w-3xl mx-auto px-4 py-12">
                     <div className="prose prose-lg prose-red max-w-none font-serif text-gray-800">
-                        {/* Excerpt */}
+                        {/* Excerpt / Intro */}
                         {article.excerpt && (
                             <p className="text-xl leading-relaxed mb-8 font-sans text-gray-600 border-l-4 border-primary pl-6 italic">
                                 {article.excerpt}
                             </p>
                         )}
-                        {/* Content Parser */}
+                        {/* Main Content - Custom Markdown Parser */}
+                        {/* Uses regex to split paragraphs safely */}
                         {article.content.split(/\n\s*\n/).map((paragraph, pIndex) => {
+                            // Split by **text** to find bold sections
                             const parts = paragraph.split(/(\*\*.*?\*\*)/g);
                             return (
                                 <p key={pIndex} className="mb-4 text-gray-800 leading-relaxed">
                                     {parts.map((part, i) => {
                                         if (part.startsWith('**') && part.endsWith('**')) {
+                                            // Render as a "Header" styled bold block
                                             return (
                                                 <span key={i} className="block font-bold text-xl md:text-2xl mt-8 mb-4 text-gray-900 border-b border-gray-200 pb-2">
                                                     {part.slice(2, -2)}
                                                 </span>
                                             );
                                         }
+                                        // Regular text
                                         return <span key={i}>{part}</span>;
                                     })}
                                 </p>
