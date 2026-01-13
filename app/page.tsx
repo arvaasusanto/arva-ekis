@@ -1,59 +1,63 @@
 import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import ArticleGrid from "@/components/ArticleGrid";
 import Footer from "@/components/Footer";
-import { recentArticles, featuredArticle } from "@/lib/data";
-import { notFound } from "next/navigation";
-export default function ArticlePage({ params }: { params: { id: string } }) {
-    // Combine all articles to find the one matching the ID
-    const allArticles = [featuredArticle, ...recentArticles];
-    const article = allArticles.find((a) => a.id === params.id);
-    if (!article) {
-        notFound();
-    }
+import { featuredArticle, recentArticles } from "@/lib/data";
+
+export default function Home() {
     return (
         <main className="min-h-screen flex flex-col">
             <Navbar />
-            <article className="flex-grow">
-                {/* Header */}
-                <header className="bg-paper py-16 px-4 border-b border-gray-100">
-                    <div className="max-w-3xl mx-auto text-center">
-                        <span className="text-primary font-bold tracking-wider text-sm uppercase mb-4 block">
-                            {article.category}
-                        </span>
-                        <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 mb-6 leading-tight">
-                            {article.title}
-                        </h1>
-                        <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
-                            <span className="font-medium text-gray-900">{article.author}</span>
-                            <span>•</span>
-                            <span>{article.date || "Just now"}</span>
+
+            <Hero article={featuredArticle} />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+                <div className="flex flex-col md:flex-row gap-12">
+                    {/* Main Content */}
+                    <div className="flex-1">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
+                            <h2 className="text-2xl font-serif font-bold text-gray-900">
+                                Latest Analysis
+                            </h2>
+                            <span className="text-sm font-medium text-primary cursor-pointer hover:underline">
+                                View All
+                            </span>
                         </div>
+
+                        <ArticleGrid articles={recentArticles} />
                     </div>
-                </header>
-                {/* Content */}
-                <div className="max-w-3xl mx-auto px-4 py-12">
-                    <div className="prose prose-lg prose-red max-w-none font-serif text-gray-800">
-                        {/* Excerpt / Intro */}
-                        {article.excerpt && (
-                            <p className="text-xl leading-relaxed mb-8 font-sans text-gray-600 border-l-4 border-primary pl-6 italic">
-                                {article.excerpt}
+
+                    {/* Sidebar */}
+                    <aside className="w-full md:w-80 flex-shrink-0 space-y-8">
+                        <div className="bg-paper p-6 border border-gray-100 rounded-sm">
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm mb-4">
+                                Weekly Brief
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Get our editor's digest of the most critical economic shifts in the Islamic world.
                             </p>
-                        )}
-                        {/* Main Content - split by double newline to create paragraphs */}
-                        {article.content.split('\n\n').map((paragraph, index) => (
-                            <p key={index} className="mb-4">
-                                {paragraph}
-                            </p>
-                        ))}
-                    </div>
+                            <button className="w-full bg-secondary text-white py-2 font-medium text-sm hover:bg-gray-800 transition-colors">
+                                Subscribe Free
+                            </button>
+                        </div>
+
+                        <div>
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm mb-4 pb-2 border-b border-gray-200">
+                                Trending Topics
+                            </h3>
+                            <div className="flex flex-wrap gap-2">
+                                {["De-dollarization", "Waqf", "Gold Dinar", "Digital Assets", "Fiscal Policy"].map((tag) => (
+                                    <span key={tag} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 hover:bg-gray-200 cursor-pointer">
+                                        #{tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
                 </div>
-            </article>
+            </div>
+
             <Footer />
         </main>
     );
-}
-export async function generateStaticParams() {
-    const allArticles = [featuredArticle, ...recentArticles];
-    return allArticles.map((article) => ({
-        id: article.id,
-    }));
 }
