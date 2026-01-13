@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import { recentArticles, featuredArticle } from "@/lib/data";
 import { notFound } from "next/navigation";
 export default function ArticlePage({ params }: { params: { id: string } }) {
-    // Combine all articles to find the one matching the ID
     const allArticles = [featuredArticle, ...recentArticles];
     const article = allArticles.find((a) => a.id === params.id);
     if (!article) {
@@ -42,29 +41,25 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
                 {/* Content */}
                 <div className="max-w-3xl mx-auto px-4 py-12">
                     <div className="prose prose-lg prose-red max-w-none font-serif text-gray-800">
-                        {/* Excerpt / Intro */}
+                        {/* Excerpt */}
                         {article.excerpt && (
                             <p className="text-xl leading-relaxed mb-8 font-sans text-gray-600 border-l-4 border-primary pl-6 italic">
                                 {article.excerpt}
                             </p>
                         )}
-                        {/* Main Content - split by double newline to create paragraphs */}
-                        {/* Main Content - Custom Markdown Parser */}
-                        {article.content.split('\n\n').map((paragraph, pIndex) => {
-                            // Split by **text** to find bold sections
+                        {/* Content Parser */}
+                        {article.content.split(/\n\s*\n/).map((paragraph, pIndex) => {
                             const parts = paragraph.split(/(\*\*.*?\*\*)/g);
                             return (
                                 <p key={pIndex} className="mb-4 text-gray-800 leading-relaxed">
                                     {parts.map((part, i) => {
                                         if (part.startsWith('**') && part.endsWith('**')) {
-                                            // Render as a "Header" styled bold block
                                             return (
-                                                <span key={i} className="block font-bold text-xl md:text-2xl mt-8 mb-4 text-gray-900">
+                                                <span key={i} className="block font-bold text-xl md:text-2xl mt-8 mb-4 text-gray-900 border-b border-gray-200 pb-2">
                                                     {part.slice(2, -2)}
                                                 </span>
                                             );
                                         }
-                                        // Regular text
                                         return <span key={i}>{part}</span>;
                                     })}
                                 </p>
