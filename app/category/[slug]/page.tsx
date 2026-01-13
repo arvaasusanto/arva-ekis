@@ -12,13 +12,6 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     const categoryArticles = [featuredArticle, ...recentArticles].filter((article) => {
         return article.category === categoryName;
     });
-    // Simple string matching, robust enough for this scale
-    // "Moneter & Kekuasaan" -> check if includes "Moneter" or exact match
-    if (!article.category) return false;
-    return article.category.toLowerCase().includes(normalizedCategoryName) ||
-        normalizedCategoryName.includes(article.category.toLowerCase()) ||
-        // Handle specific slug mapping if needed, but direct match is safest for now
-        article.category === categoryName;
 });
 return (
     <main className="min-h-screen flex flex-col">
